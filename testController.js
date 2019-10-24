@@ -1,6 +1,6 @@
-import gameDictionary from '/fetchAPI.js';
-import scoreGame from '/scoreGame.js';
-import teamScore from '/teamScore.js';
+import gameDictionary from '/js/fetchAPI.js';
+import scoreGame from '/js/scoreGame.js';
+import teamScore from '/js/teamScore.js';
 
 function showFirstGame() {
     document.getElementById("homeTeamScore").innerHTML = data.gameData[0]['HomeTeamScore'];
