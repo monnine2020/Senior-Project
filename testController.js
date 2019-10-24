@@ -1,4 +1,6 @@
 import gameDictionary from '/fetchAPI.js';
+import scoreGame from '/scoreGame.js';
+import teamScore from '/teamScore.js';
 
 function showFirstGame() {
     document.getElementById("homeTeamScore").innerHTML = data.gameData[0]['HomeTeamScore'];
@@ -43,3 +45,10 @@ document.getElementById("pullFourTeams").onclick = showFourTeams;
 var data = new gameDictionary();
 data.fetchGameData();
 data.fetchConferenceData();
+
+//let game1 = data.gameData[0];
+//let winningTeam = new teamScore("Florida Gators");
+//let losingTeam = new teamScore("Miami Hurricanes");
+//let firstGame = new scoreGame(game1);
+//winningTeam.updateScore(firstGame.score);
+
