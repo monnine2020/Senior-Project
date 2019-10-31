@@ -1,9 +1,13 @@
 export default class teamScore {
     constructor(teamName) {
-        this.score= 0;
+        this.totalScore= 0;
         this.teamName = teamName;
     }
-    updateScore(points) {
-        score = score + points;
+    updateScore(scoredGame) {
+        let gameScore = scoredGame["points"];
+        this.totalScore = this.totalScore + gameScore;
+    }
+    getScore() {
+        return this.totalScore;
     }
 }

@@ -1,5 +1,5 @@
 import gameDictionary from '/js/fetchAPI.js';
-import scoreGame from '/js/scoreGame.js';
+import gameScorer from '/js/gameScorer.js';
 import teamScore from '/js/teamScore.js';
 
 function showFirstGame() {
@@ -7,6 +7,8 @@ function showFirstGame() {
     document.getElementById("awayTeamScore").innerHTML = data.gameData[0]['AwayTeamScore'];
     document.getElementById("homeTeamName").innerHTML = data.gameData[0]['HomeTeamName'];
     document.getElementById("awayTeamName").innerHTML = data.gameData[0]['AwayTeamName'];
+    document.getElementById("homeTeamTotal").innerHTML = data.gameData[0]["HomeTeamName"] + ": " + winningTeam.getScore();
+    document.getElementById("awayTeamTotal").innerHTML = data.gameData[0]["AwayTeamName"] + ": " + losingTeam.getScore();
 }
 
 function showFourTeams() {
@@ -46,9 +48,15 @@ var data = new gameDictionary();
 data.fetchGameData();
 data.fetchConferenceData();
 
-//let game1 = data.gameData[0];
-//let winningTeam = new teamScore("Florida Gators");
-//let losingTeam = new teamScore("Miami Hurricanes");
-//let firstGame = new scoreGame(game1);
-//winningTeam.updateScore(firstGame.score);
+let winningTeam = new teamScore("Florida Gators");
+let losingTeam = new teamScore("Miami Hurricanes");
+let firstGame;
+
+window.setTimeout(()=> {
+    let game0 = data.gameData[0];
+    firstGame = new gameScorer(game0);
+    winningTeam.updateScore(firstGame.score());
+},2000);
+
+
 
