@@ -10,4 +10,7 @@ export default class teamScore {
     getScore() {
         return this.totalScore;
     }
+    getTeamName() {
+        return this.teamName;
+    }
 }
