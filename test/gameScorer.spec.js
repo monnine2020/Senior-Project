@@ -7,7 +7,13 @@ describe('Basic scoring algorithm class functionality', () => {
 		'HomeTeamName': "Purdue Boilermakers",
 		'AwayTeamScore': 20,
 		'AwayTeamName': "Indiana Hoosiers"};
-	let testGameScorer = new gameScorer(playedGame);
+	let fakeConferenceData = {
+		"conferenceID" : 10, "ConferenceName": "Big Ten", "Teams": [
+			{"School":"Purdue", "Name": "Boilermakers"},
+			{"School":"Indiana", "Name": "Hoosiers"}
+		]
+	};
+	let testGameScorer = new gameScorer(playedGame, fakeConferenceData);
 	it('Class object is successfully created given a game', () => {
 		expect(testGameScorer).to.not.equal(null);
 	});

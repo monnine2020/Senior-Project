@@ -3,12 +3,12 @@ import gameScorer from '/js/gameScorer.js';
 import teamScore from '/js/teamScore.js';
 
 function showFirstGame() {
-    document.getElementById("homeTeamScore").innerHTML = data.gameData[0]['HomeTeamScore'];
-    document.getElementById("awayTeamScore").innerHTML = data.gameData[0]['AwayTeamScore'];
-    document.getElementById("homeTeamName").innerHTML = data.gameData[0]['HomeTeamName'];
-    document.getElementById("awayTeamName").innerHTML = data.gameData[0]['AwayTeamName'];
-    document.getElementById("homeTeamTotal").innerHTML = data.gameData[0]["HomeTeamName"] + ": " + winningTeam.getScore();
-    document.getElementById("awayTeamTotal").innerHTML = data.gameData[0]["AwayTeamName"] + ": " + losingTeam.getScore();
+    document.getElementById("homeTeamScore").innerHTML = data.gameData[500]['HomeTeamScore'];
+    document.getElementById("awayTeamScore").innerHTML = data.gameData[500]['AwayTeamScore'];
+    document.getElementById("homeTeamName").innerHTML = data.gameData[500]['HomeTeamName'];
+    document.getElementById("awayTeamName").innerHTML = data.gameData[500]['AwayTeamName'];
+    document.getElementById("homeTeamTotal").innerHTML = data.gameData[500]["HomeTeamName"] + ": " + winningTeam.getScore();
+    document.getElementById("awayTeamTotal").innerHTML = data.gameData[500]["AwayTeamName"] + ": " + losingTeam.getScore();
 }
 
 function showFourTeams() {
@@ -48,15 +48,15 @@ var data = new gameDictionary();
 data.fetchGameData();
 data.fetchConferenceData();
 
-let winningTeam = new teamScore("Florida Gators");
-let losingTeam = new teamScore("Miami Hurricanes");
-let firstGame;
+let winningTeam = new teamScore("Eastern Michigan Eagles");
+let losingTeam = new teamScore("Western Michigan Broncos");
+let game;
 
 window.setTimeout(()=> {
-    let game0 = data.gameData[0];
-    firstGame = new gameScorer(game0);
-    winningTeam.updateScore(firstGame.score());
-},2000);
+    let game0 = data.gameData[500];
+    game = new gameScorer(game0,data.conferenceData);
+    winningTeam.updateScore(game.score());
+},2500);
 
 
 
