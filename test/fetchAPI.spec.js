@@ -14,7 +14,6 @@ describe('Basic fetchAPI class functionality', () => {
         expect(testGameDictionary.conferenceData).to.not.equal(null);
     });
 
-    //updates dictionaries with object with data
     testGameDictionary.fetchGameData();
     testGameDictionary.fetchConferenceData();
 

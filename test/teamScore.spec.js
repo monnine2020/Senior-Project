@@ -1,7 +1,7 @@
 let expect = chai.expect;
 import teamScore from '../js/teamScore.js';
 
-describe('Basic class functionality', () => {
+describe('Basic teamScore class functionality', () => {
 	let testTeam = new teamScore("Team One");
 	it('Class object correctly made given a team name', () => {
 		expect(testTeam.teamName).to.equal("Team One");

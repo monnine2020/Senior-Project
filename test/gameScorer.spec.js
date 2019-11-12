@@ -5,14 +5,16 @@ describe('Basic scoring algorithm class functionality', () => {
 	let playedGame = {
 		'HomeTeamScore': 21,
 		'HomeTeamName': "Purdue Boilermakers",
+		'HomeTeam': "PUR",
 		'AwayTeamScore': 20,
-		'AwayTeamName': "Indiana Hoosiers"};
-	let fakeConferenceData = {
-		"conferenceID" : 10, "ConferenceName": "Big Ten", "Teams": [
-			{"School":"Purdue", "Name": "Boilermakers"},
-			{"School":"Indiana", "Name": "Hoosiers"}
+		'AwayTeamName': "Indiana Hoosiers",
+		'AwayTeam': "IND"};
+	let fakeConferenceData = [{
+		"conferenceID" : 0, "ConferenceName": "Big Ten", "Teams": [
+			{"School":"Purdue", "Name": "Boilermakers", "Key": "PUR"},
+			{"School":"Indiana", "Name": "Hoosiers", "Key": "IND"}
 		]
-	};
+	}];
 	let testGameScorer = new gameScorer(playedGame, fakeConferenceData);
 	it('Class object is successfully created given a game', () => {
 		expect(testGameScorer).to.not.equal(null);
@@ -30,6 +32,6 @@ describe('Basic scoring algorithm class functionality', () => {
 	it('Function for scoring correctly puts out data', () => {
 		let returnedData = testGameScorer.score();
 		expect(returnedData['winningTeam']).to.equal("Purdue Boilermakers");
-		expect(returnedData['points']).to.equal(5);
+		expect(returnedData['points']).to.equal(10);
 	})
 });

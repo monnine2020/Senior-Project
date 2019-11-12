@@ -27,7 +27,21 @@ export default class gameScorer {
         } 
     }
     checkTeamTwo(conferenceIndex, conferenceName) {
-        for(let conferenceCursor = conferenceIndex - 1; conferenceCursor <= conferenceIndex + 1; conferenceCursor++) {
+        let conferenceCursor;
+        let conferenceLimit;
+        if(conferenceIndex == 0) {
+            conferenceCursor = 0;
+            conferenceLimit = 1;
+        }
+        else if(conferenceIndex == 19) {
+            conferenceCursor = 19;
+            conferenceLimit = 19;
+        }
+        else {
+            conferenceLimit = conferenceLimit + 1;
+            conferenceCursor = conferenceIndex;
+        }
+        for(conferenceCursor; conferenceCursor <= conferenceLimit; conferenceCursor++) {
             for(let teamCursor = 0; teamCursor <= this.conferenceData[conferenceCursor]['Teams'].length - 1; teamCursor++) {
                 if(this.awayTeamKey == this.conferenceData[conferenceCursor]['Teams'][teamCursor]['Key']) {
                     if(this.conferenceData[conferenceCursor]['ConferenceName'] == conferenceName) {

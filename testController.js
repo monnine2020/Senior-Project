@@ -56,7 +56,12 @@ window.setTimeout(()=> {
     let game0 = data.gameData[500];
     game = new gameScorer(game0,data.conferenceData);
     winningTeam.updateScore(game.score());
+    console.log(data.conferenceData);
+    console.log(data.gameData);
 },2500);
+
+console.log(data.conferenceData);
+console.log(data.gameData);
 
 
 
