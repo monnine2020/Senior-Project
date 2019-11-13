@@ -62,6 +62,3 @@ window.setTimeout(()=> {
 
 console.log(data.conferenceData);
 console.log(data.gameData);
-
-
-

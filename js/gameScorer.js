@@ -9,6 +9,7 @@ export default class gameScorer {
         this.conferenceData = confData;
         this.isConferenceGame = this.checkTeamOne();
     }
+
     getWinningTeam() {
         if(this.homeTeamScore > this.awayTeamScore) {
             return this.homeTeam
