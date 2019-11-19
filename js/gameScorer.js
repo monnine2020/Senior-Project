@@ -39,8 +39,8 @@ export default class gameScorer {
             conferenceLimit = 19;
         }
         else {
-            conferenceLimit = conferenceLimit + 1;
-            conferenceCursor = conferenceIndex;
+            conferenceLimit = conferenceIndex + 1;
+            conferenceCursor = conferenceIndex - 1;
         }
         for(conferenceCursor; conferenceCursor <= conferenceLimit; conferenceCursor++) {
             for(let teamCursor = 0; teamCursor <= this.conferenceData[conferenceCursor]['Teams'].length - 1; teamCursor++) {

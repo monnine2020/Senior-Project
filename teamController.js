@@ -11,7 +11,6 @@ function dataCreator() {
 function genDecidedListOfGames() {
     let game;
     for(let gameCursor = 0; gameCursor < Object.keys(data.gameData).length; gameCursor++) {
-        console.log(gameCursor);
         if(data.gameData[gameCursor]["GameEndDateTime"] !== null) {
             game = data.gameData[gameCursor];
             scoreAbleGames[gameCursor] = game;
@@ -23,7 +22,6 @@ function genDecidedListOfGames() {
 }
 
 function updateAllScores() {
-    console.log("Test4");
     let scoredGame;
     let teamName;
     for(let scoredGameCursor = 0; scoredGameCursor < Object.keys(scoredGameLibrary).length; scoredGameCursor++) {
@@ -38,7 +36,6 @@ function updateAllScores() {
 }
 
 function scoreAllTeams() {
-    console.log("Test3");
     let scoredGame;
     let game;
     for(let gameCursor = 0; gameCursor < Object.keys(scoreAbleGames).length; gameCursor++) {
@@ -52,12 +49,25 @@ function scoreAllTeams() {
 
 function createAllTeams() {
     let teamName;
+    let selector = document.getElementById("teamSelector");
     for(let conferenceCursor = 0; conferenceCursor <= 19; conferenceCursor++) {
         for(let teamCursor = 0; teamCursor <= data.conferenceData[conferenceCursor]['Teams'].length - 1; teamCursor++) {
             teamName = data.conferenceData[conferenceCursor]['Teams'][teamCursor]["School"]+ " " + data.conferenceData[conferenceCursor]['Teams'][teamCursor]["Name"];
             teamLibrary[teamName] = new teamScore(teamName);
+
+            var opt = document.createElement('option');
+            opt.value = teamName;
+            opt.innerHTML = teamName;
+            selector.add(opt);
         }  
     } 
+}
+
+function getScoreOfTeam() {
+    let teamName = document.getElementById("teamSelector").value;
+    console.log(teamName);
+    let points = teamLibrary[teamName].getScore();
+    document.getElementById("points").innerHTML= "Total Points: " + points;
 }
 
 let scoreAbleGames = {};
@@ -66,6 +76,8 @@ let scoredGameLibrary = {};
 var data = new gameDictionary();
 data.fetchGameData();
 data.fetchConferenceData();
+
+document.getElementById("teamGetter").onclick = getScoreOfTeam;
 
 window.setTimeout(()=> {
     dataCreator();
