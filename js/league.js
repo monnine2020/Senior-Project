@@ -1,12 +1,12 @@
 export default class league {
-    constructor(participantName, teamName) {
-        this.participants = participantName;
-        this.teams = teamName;
+    constructor(leagueDictionary) {
+        this.participants = Object.keys(leagueDictionary);
+        this.leagueDictionary = leagueDictionary;
     }
     getParticpants() {
         return this.participants;
     }
-    getTeamNames() {
-        return this.teams;
+    getTeamsOfParticipant(participantKey) {
+        return this.leagueDictionary[participantKey];
     }
 }
