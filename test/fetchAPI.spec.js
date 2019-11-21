@@ -17,13 +17,13 @@ describe('Basic fetchAPI class functionality', () => {
     testGameDictionary.fetchGameData();
     testGameDictionary.fetchConferenceData();
 
-    it('gameData is correctly updated', () => {
+    it('gameData is correctly updated with pulled information', () => {
         expect(testGameDictionary.gameData[0]['HomeTeamScore']).to.equal(14);
         expect(testGameDictionary.gameData[0]['AwayTeamScore']).to.equal(12);
         expect(testGameDictionary.gameData[0]['HomeTeamName']).to.equal('Florida Gators');
         expect(testGameDictionary.gameData[0]['AwayTeamName']).to.equal('Miami Hurricanes');
     });
-    it('conferenceData is correctly updated', () => {
+    it('conferenceData is correctly updated with pulled information', () => {
         expect(testGameDictionary.conferenceData[0]['Teams'][0]['School']).to.equal("Temple");
         expect(testGameDictionary.conferenceData[0]['Teams'][0]['Conference']).to.equal("American Athletic - East");
         expect(testGameDictionary.conferenceData[0]['Teams'][0]['ConferenceWins']).to.not.equal(null);

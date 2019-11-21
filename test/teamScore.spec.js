@@ -13,7 +13,7 @@ describe('Basic teamScore class functionality', () => {
 		expect(testTeam.getScore()).to.equal(0);
 	});
 
-	it('Update Score function works correctly with given winning team', () => {
+	it('Update Score function works correctly given winning team and points', () => {
 		let testGame = {"points": 10, "winningTeam": "Team One"};
 		testTeam.updateScore(testGame);
 		expect(testTeam.getScore()).to.equal(10);

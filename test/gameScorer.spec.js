@@ -16,7 +16,7 @@ describe('Basic scoring algorithm class functionality', () => {
 		]
 	}];
 	let testGameScorer = new gameScorer(playedGame, fakeConferenceData);
-	it('Class object is successfully created given a game', () => {
+	it('Class object is successfully created', () => {
 		expect(testGameScorer).to.not.equal(null);
 	});
 	it('Class object has correct attributes given game', () => {
@@ -29,7 +29,7 @@ describe('Basic scoring algorithm class functionality', () => {
 		let winningTeam = testGameScorer.getWinningTeam();
 		expect(winningTeam).to.equal("Purdue Boilermakers");
 	})
-	it('Function for scoring correctly puts out data', () => {
+	it('Function for scoring correctly scores games based on data given', () => {
 		let returnedData = testGameScorer.score();
 		expect(returnedData['winningTeam']).to.equal("Purdue Boilermakers");
 		expect(returnedData['points']).to.equal(10);
