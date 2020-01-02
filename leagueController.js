@@ -1,7 +1,7 @@
 import gameDictionary from '/js/fetchAPI.js';
 import gameScorer from '/js/gameScorer.js';
 import teamScore from '/js/teamScore.js';
-import league from '/js/league.js'
+import League from '/js/league.js'
 
 function dataCreator() {
     createAllTeams();
@@ -105,28 +105,80 @@ function createAllTeams() {
     }
 }
 
-function getScoreOfTeam() {
+function updateLeagueAndPage() {
+    league = new League(leagueData);
+    updatePage();
+}
+
+function addPart1() {
     let teamName = document.getElementById("teamSelector").value;
-    let points = teamLibrary[teamName].getScore();
-    document.getElementById("points").innerHTML= "Total Points: " + points;
+    leagueData["participant1"].push(teamName);
+    updateLeagueAndPage();
+}
+function addPart2() {
+    let teamName = document.getElementById("teamSelector").value;
+    leagueData["participant2"].push(teamName);
+    updateLeagueAndPage();
+}
+
+function updatePage() {
+    let teamName;
+    let points;
+    let team1Total;
+    let team2Total;
+    let part1teams = league.getTeamsOfParticipant("participant1");
+    let part2teams = league.getTeamsOfParticipant("participant2");
+
+    teamName = part1teams[0];
+    points = teamLibrary[teamName].getScore();
+    document.getElementById("team1part1").innerHTML = teamName;
+    document.getElementById("team1part1score").innerHTML = points;
+    team1Total = points;
+
+    teamName = part2teams[0];
+    points = teamLibrary[teamName].getScore();
+    document.getElementById("team1part2").innerHTML = teamName;
+    document.getElementById("team1part2score").innerHTML = points;
+    team2Total = points;
+
+    teamName = part1teams[1];
+    points = teamLibrary[teamName].getScore();
+    document.getElementById("team2part1").innerHTML = teamName;
+    document.getElementById("team2part1score").innerHTML = points;
+    team1Total = team1Total + points;
+
+    teamName = part2teams[1];
+    points = teamLibrary[teamName].getScore();
+    document.getElementById("team2part2").innerHTML = teamName;
+    document.getElementById("team2part2score").innerHTML = points;
+    team2Total = team2Total + points;
+
+    document.getElementById("team1total").innerHTML = team1Total;
+    document.getElementById("team2total").innerHTML = team2Total;
 }
 
 let scoreAbleGames = {};
 let teamLibrary = {};
 let scoredGameLibrary = {};
+let leagueData = {};
 var data = new gameDictionary();
 data.fetchGameData();
 data.fetchConferenceData();
+let league;
 
-//document.getElementById("teamGetter").onclick = getScoreOfTeam;
+document.getElementById("addTeam1").onclick = addPart1;
+document.getElementById("addTeam2").onclick = addPart2;
 
 window.setTimeout(()=> {
     dataCreator();
     updateAllScores();
+    leagueData["participant1"] = [];
+    leagueData["participant2"] = [];
 },2000);
 
 // Debug Code
-// window.setTimeout(()=> {
-//     console.log(teamLibrary);
-//     console.log(scoredGameLibrary)
-// },10000);
+window.setTimeout(()=> {
+    console.log(teamLibrary);
+    console.log(scoredGameLibrary);
+    console.log(league);
+},10000);

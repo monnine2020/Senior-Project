@@ -1,4 +1,4 @@
-export default class league {
+export default class League {
     constructor(leagueDictionary) {
         this.participants = Object.keys(leagueDictionary);
         this.leagueDictionary = leagueDictionary;

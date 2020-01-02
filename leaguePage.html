@@ -4,7 +4,36 @@
     <script type = "module" src = leagueController.js></script>
 </head>
 <body>
+    <div id = "Team Selector"></div>
     <select id = "teamSelector"></select>
-    <button id = "teamGetter">Get Total Points</button>
-    <div id = "points">Total Points: </div>
+    <table>
+        <button id = "addTeam1">Add Team to Participant 1</button>
+        <button id = "addTeam2">Add Team to Participant 2</button>
+    </table>
+    <table style="width:100%" align = "center">
+            <tr>
+              <th>Participant 1</th>
+              <th>Team Points</th>
+              <th>Participant 2</th> 
+              <th>Team Points</th>
+            </tr>
+            <tr>
+              <td align = "center" id = "team1part1">Team 1</td>
+              <td align = "center" id = "team1part1score">0</td>
+              <td align = "center" id = "team1part2">Team 1</td>
+              <td align = "center" id = "team1part2score">0</td>
+            </tr>
+            <tr>
+              <td align = "center" id = "team2part1">Team 2</td>
+              <td align = "center" id = "team2part1score">0</td>
+              <td align = "center" id = "team2part2">Team 2</td>
+              <td align = "center" id = "team2part2score">0</td>
+            </tr>
+            <tr>
+              <td align = "center">Total Points</td>
+              <td align = "center" id = "team1total">0</td>
+              <td align = "center">Total Points</td>
+              <td align = "center" id = "team2total">0</td>
+            </tr>
+          </table>
 </body>
