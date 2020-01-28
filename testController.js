@@ -1,64 +1,164 @@
 import gameDictionary from '/js/fetchAPI.js';
 import gameScorer from '/js/gameScorer.js';
 import teamScore from '/js/teamScore.js';
+import League from '/js/league.js'
 
-function showFirstGame() {
-    document.getElementById("homeTeamScore").innerHTML = data.gameData[500]['HomeTeamScore'];
-    document.getElementById("awayTeamScore").innerHTML = data.gameData[500]['AwayTeamScore'];
-    document.getElementById("homeTeamName").innerHTML = data.gameData[500]['HomeTeamName'];
-    document.getElementById("awayTeamName").innerHTML = data.gameData[500]['AwayTeamName'];
-    document.getElementById("homeTeamTotal").innerHTML = data.gameData[500]["HomeTeamName"] + ": " + winningTeam.getScore();
-    document.getElementById("awayTeamTotal").innerHTML = data.gameData[500]["AwayTeamName"] + ": " + losingTeam.getScore();
+function dataCreator() {
+    createAllTeams();
+    genDecidedListOfGames();
+    scoreAllTeams();
 }
 
-function showFourTeams() {
-    document.getElementById("team").innerHTML = data.conferenceData[0]['Teams'][0]['School'];
-    document.getElementById("conference").innerHTML = data.conferenceData[0]['Teams'][0]['Conference'];
-    document.getElementById("confwins").innerHTML = "Conference Wins: " + data.conferenceData[0]['Teams'][0]['ConferenceWins'];
-    document.getElementById("conflosses").innerHTML = "Conference Losses: " + data.conferenceData[0]['Teams'][0]['ConferenceLosses'];
-    document.getElementById("wins").innerHTML = "Wins: " + data.conferenceData[0]['Teams'][0]['Wins'];
-    document.getElementById("losses").innerHTML = "Losses: " + data.conferenceData[0]['Teams'][0]['Losses'];
+function genDecidedListOfGames() {
+    let game;
+    for(let gameCursor = 0; gameCursor < Object.keys(data.gameData).length; gameCursor++) {
+        if(gameIsComplete(gameCursor)) {
+            generateValidGame(gameCursor);
+        }
+        else {
+            generateNotValidGame(gameCursor);
+        }
+    } 
 
-    document.getElementById("team1").innerHTML = data.conferenceData[1]['Teams'][0]['School'];
-    document.getElementById("conference1").innerHTML = data.conferenceData[1]['Teams'][0]['Conference'];
-    document.getElementById("confwins1").innerHTML = "Conference Wins: " + data.conferenceData[1]['Teams'][0]['ConferenceWins'];
-    document.getElementById("conflosses1").innerHTML = "Conference Losses: " + data.conferenceData[1]['Teams'][0]['ConferenceLosses'];
-    document.getElementById("wins1").innerHTML = "Wins: " + data.conferenceData[1]['Teams'][0]['Wins'];
-    document.getElementById("losses1").innerHTML = "Losses: " + data.conferenceData[1]['Teams'][0]['Losses'];
 
-    document.getElementById("team2").innerHTML = data.conferenceData[2]['Teams'][0]['School'];
-    document.getElementById("conference2").innerHTML = data.conferenceData[2]['Teams'][0]['Conference'];
-    document.getElementById("confwins2").innerHTML = "Conference Wins: " + data.conferenceData[2]['Teams'][0]['ConferenceWins'];
-    document.getElementById("conflosses2").innerHTML = "Conference Losses: " + data.conferenceData[2]['Teams'][0]['ConferenceLosses'];
-    document.getElementById("wins2").innerHTML = "Wins: " + data.conferenceData[2]['Teams'][0]['Wins'];
-    document.getElementById("losses2").innerHTML = "Losses: " + data.conferenceData[2]['Teams'][0]['Losses'];
+    function gameIsComplete(gameCursor) {
+        return data.gameData[gameCursor]["GameEndDateTime"] !== null;
+    }
 
-    document.getElementById("team3").innerHTML = data.conferenceData[3]['Teams'][0]['School'];
-    document.getElementById("conference3").innerHTML = data.conferenceData[3]['Teams'][0]['Conference'];
-    document.getElementById("confwins3").innerHTML = "Conference Wins: " + data.conferenceData[3]['Teams'][0]['ConferenceWins'];
-    document.getElementById("conflosses3").innerHTML = "Conference Losses: " + data.conferenceData[3]['Teams'][0]['ConferenceLosses'];
-    document.getElementById("wins3").innerHTML = "Wins: " + data.conferenceData[3]['Teams'][0]['Wins'];
-    document.getElementById("losses3").innerHTML = "Losses: " + data.conferenceData[3]['Teams'][0]['Losses'];
+    function generateValidGame(gameCursor) {
+        game = data.gameData[gameCursor];
+        scoreAbleGames[gameCursor] = game;
+    }
+
+    function generateNotValidGame(gameCursor) {
+        scoreAbleGames[gameCursor] = "Not Complete";
+    }
 }
 
-document.getElementById("firstGameOfSeason").onclick = showFirstGame;
-document.getElementById("pullFourTeams").onclick = showFourTeams;
+function updateAllScores() {
+    let scoredGame;
+    let teamName;
+    for(let scoredGameCursor = 0; scoredGameCursor < Object.keys(scoredGameLibrary).length; scoredGameCursor++) {
+        if(gameExists(scoredGameCursor)) {
+            scoredGame = scoredGameLibrary[scoredGameCursor];
+            if(teamIsValid()) {
+                updateTeamScore();
+            }
+        }
+    }
 
+    function gameExists(scoredGameCursor) {
+        return scoredGameLibrary[scoredGameCursor] !== undefined;
+    }
+
+    function updateTeamScore() {
+        teamName = scoredGame["winningTeam"];
+        teamLibrary[teamName].updateScore(scoredGame);
+    }
+
+    function teamIsValid() {
+        return scoredGame["winningTeam"] in teamLibrary;
+    }
+}
+
+function scoreAllTeams() {
+    let scoredGame;
+    let game;
+    for(let gameCursor = 0; gameCursor < Object.keys(scoreAbleGames).length; gameCursor++) {
+        if(gameIsComplete(gameCursor)){
+            scoreAndStoreGame(gameCursor);
+        }
+    } 
+
+    function scoreAndStoreGame(gameCursor) {
+        game = scoreAbleGames[gameCursor];
+        scoredGame = new gameScorer(game, data.conferenceData);
+        scoredGameLibrary[gameCursor] = scoredGame.score();
+    }
+
+    function gameIsComplete(gameCursor) {
+        return scoreAbleGames[gameCursor] !== "Not Complete";
+    }
+}
+
+function createAllTeams() {
+    let teamName;
+    let teamConference;
+    let big10 = document.getElementById("selectorBIG10");
+    let big12 = document.getElementById("selectorBIG12");
+    let acc = document.getElementById("selectorACC");
+    let pac12 = document.getElementById("selectorPAC12");
+    let sec = document.getElementById("selectorSEC");
+    let atlarge1 = document.getElementById("selectorATLARGE1");
+    let atlarge2 = document.getElementById("selectorATLARGE2");
+    let atlarge3 = document.getElementById("selectorATLARGE3");
+    for(let conferenceCursor = 0; conferenceCursor <= 19; conferenceCursor++) {
+        for(let teamCursor = 0; teamCursor <= data.conferenceData[conferenceCursor]['Teams'].length - 1; teamCursor++) {
+            teamName = data.conferenceData[conferenceCursor]['Teams'][teamCursor]["School"]+ " " + data.conferenceData[conferenceCursor]['Teams'][teamCursor]["Name"];
+            teamConference = data.conferenceData[conferenceCursor]['ConferenceName'];
+            addTeamToTeamLibrary();
+            seperateTeamIntoSelector(teamConference, teamName);
+        }  
+    } 
+
+    function seperateTeamIntoSelector(teamConference,teamName) {
+        var opt = document.createElement('option');
+        opt.value = teamName;
+        opt.innerHTML = teamName;
+
+        if(teamConference === "Big Ten") {
+            big10.add(opt);
+        }
+        else if(teamConference === "Atlantic Coast") {
+            acc.add(opt);
+        }
+        else if(teamConference === "SEC") {
+            sec.add(opt);
+        }
+        else if(teamConference === "Pac-12") {
+            pac12.add(opt);
+        }
+        else if(teamConference === "Big 12") {
+            big12.add(opt);
+        }
+        else {
+            let optalt1 = document.createElement("option");
+            let optalt2 = document.createElement("option");
+            optalt1.value = teamName;
+            optalt1.innerHTML = teamName;
+            optalt2.value = teamName;
+            optalt2.innerHTML = teamName;
+            atlarge1.add(opt);
+            atlarge2.add(optalt1);
+            atlarge3.add(optalt2);
+        }
+    }
+
+    function addTeamToTeamLibrary() {
+        teamLibrary[teamName] = new teamScore(teamName);
+    }
+}
+
+let scoreAbleGames = {};
+let teamLibrary = {};
+let scoredGameLibrary = {};
+let leagueData = {};
 var data = new gameDictionary();
 data.fetchGameData();
 data.fetchConferenceData();
-
-let winningTeam = new teamScore("Eastern Michigan Eagles");
-let losingTeam = new teamScore("Western Michigan Broncos");
-let game;
+let league;
 
 window.setTimeout(()=> {
-    let game0 = data.gameData[500];
-    game = new gameScorer(game0,data.conferenceData);
-    winningTeam.updateScore(game.score());
-    console.log(data.conferenceData);
-    console.log(data.gameData);
-},2500);
+    dataCreator();
+    updateAllScores();
+    leagueData["participant1"] = [];
+    leagueData["participant2"] = [];
+},2000);
 
-console.log(data.conferenceData);
-console.log(data.gameData);
+// Debug Code
+window.setTimeout(()=> {
+    console.log(teamLibrary);
+    console.log(scoredGameLibrary);
+    console.log(league);
+    console.log(data.conferenceData);
+},10000);

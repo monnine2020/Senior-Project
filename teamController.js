@@ -124,8 +124,8 @@ window.setTimeout(()=> {
     updateAllScores();
 },2000);
 
-// Debug Code
-// window.setTimeout(()=> {
-//     console.log(teamLibrary);
-//     console.log(scoredGameLibrary)
-// },10000);
+//Debug Code
+window.setTimeout(()=> {
+    console.log(teamLibrary);
+    console.log(scoredGameLibrary)
+},10000);
