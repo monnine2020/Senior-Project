@@ -84,14 +84,6 @@ function scoreAllTeams() {
 function createAllTeams() {
     let teamName;
     let teamConference;
-    let big10 = document.getElementById("selectorBIG10");
-    let big12 = document.getElementById("selectorBIG12");
-    let acc = document.getElementById("selectorACC");
-    let pac12 = document.getElementById("selectorPAC12");
-    let sec = document.getElementById("selectorSEC");
-    let atlarge1 = document.getElementById("selectorATLARGE1");
-    let atlarge2 = document.getElementById("selectorATLARGE2");
-    let atlarge3 = document.getElementById("selectorATLARGE3");
     for(let conferenceCursor = 0; conferenceCursor <= 19; conferenceCursor++) {
         for(let teamCursor = 0; teamCursor <= data.conferenceData[conferenceCursor]['Teams'].length - 1; teamCursor++) {
             teamName = data.conferenceData[conferenceCursor]['Teams'][teamCursor]["School"]+ " " + data.conferenceData[conferenceCursor]['Teams'][teamCursor]["Name"];
@@ -102,44 +94,56 @@ function createAllTeams() {
     } 
 
     function seperateTeamIntoSelector(teamConference,teamName) {
-        var opt = document.createElement('option');
-        opt.value = teamName;
-        opt.innerHTML = teamName;
+        let currentSelector = selectors[teamConference];
 
         if(teamConference === "Big Ten") {
-            big10.add(opt);
+            populateSelector(currentSelector);
         }
         else if(teamConference === "Atlantic Coast") {
-            acc.add(opt);
+            populateSelector(currentSelector);
         }
         else if(teamConference === "SEC") {
-            sec.add(opt);
+            populateSelector(currentSelector);
         }
         else if(teamConference === "Pac-12") {
-            pac12.add(opt);
+            populateSelector(currentSelector);
         }
         else if(teamConference === "Big 12") {
-            big12.add(opt);
+            populateSelector(currentSelector);
         }
         else {
-            let optalt1 = document.createElement("option");
-            let optalt2 = document.createElement("option");
-            optalt1.value = teamName;
-            optalt1.innerHTML = teamName;
-            optalt2.value = teamName;
-            optalt2.innerHTML = teamName;
-            atlarge1.add(opt);
-            atlarge2.add(optalt1);
-            atlarge3.add(optalt2);
+            atLargeSelector();
         }
     }
 
+    function populateSelector(currentSelector) {
+        var opt = document.createElement('option');
+        opt.value = teamName;
+        opt.innerHTML = teamName;
+        currentSelector.add(opt);
+    }
+
+    function atLargeSelector() {
+        let opt1 = document.createElement("option");
+        let opt2 = document.createElement("option");
+        let opt3 = document.createElement("option");
+        opt1.value = teamName;
+        opt1.innerHTML = teamName;
+        opt2.value = teamName;
+        opt2.innerHTML = teamName;
+        opt3.value = teamName;
+        opt3.innerHTML = teamName;
+        selectors["atlarge1"].add(opt1);
+        selectors["atlarge2"].add(opt2);
+        selectors["atlarge3"].add(opt3);
+    }
     function addTeamToTeamLibrary() {
         teamLibrary[teamName] = new teamScore(teamName);
     }
 }
 
 function createLeagueParticipant(id) {
+    //for(let selectorNumber = 0; conferenceCursor <= 19; conferenceCursor++)
     let big10Team = document.getElementById("selectorBIG10").value;
     leagueData[id].push(big10Team);
     let big12Team = document.getElementById("selectorBIG12").value;
@@ -166,12 +170,20 @@ let scoreAbleGames = {};
 let teamLibrary = {};
 let scoredGameLibrary = {};
 let leagueData = {};
+leagueData["participant1"] = [];
+leagueData["participant2"] = [];
 var data = new gameDictionary();
 data.fetchGameData();
 data.fetchConferenceData();
 let league;
-leagueData["participant1"] = [];
-leagueData["participant2"] = [];
+let selectors = {"Big Ten" : document.getElementById("selectorBIG10"),
+                "Big 12" : document.getElementById("selectorBIG12"),
+                "Atlantic Coast" : document.getElementById("selectorACC"),
+                "Pac-12" : document.getElementById("selectorPAC12"),
+                "SEC": document.getElementById("selectorSEC"),
+                "atlarge1" : document.getElementById("selectorATLARGE1"),
+                "atlarge2" : document.getElementById("selectorATLARGE2"),
+                "atlarge3" : document.getElementById("selectorATLARGE3")}
 
 document.getElementById("generateTeam1").onclick = function(){createLeagueParticipant("participant1");};
 document.getElementById("generateTeam2").onclick = function(){createLeagueParticipant("participant2");};
@@ -180,8 +192,6 @@ document.getElementById("createLeague").onclick = createLeague();
 window.setTimeout(()=> {
     dataCreator();
     updateAllScores();
-    // leagueData["participant1"] = [];
-    // leagueData["participant2"] = [];
 },500);
 
 // Debug Code
