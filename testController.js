@@ -139,6 +139,29 @@ function createAllTeams() {
     }
 }
 
+function createLeagueParticipant(id) {
+    let big10Team = document.getElementById("selectorBIG10").value;
+    leagueData[id].push(big10Team);
+    let big12Team = document.getElementById("selectorBIG12").value;
+    leagueData[id].push(big12Team);
+    let secTeam = document.getElementById("selectorSEC").value;
+    leagueData[id].push(secTeam);
+    let pac12Team = document.getElementById("selectorPAC12").value;
+    leagueData[id].push(pac12Team);
+    let accTeam = document.getElementById("selectorACC").value;
+    leagueData[id].push(accTeam);
+    let atlarge1Team = document.getElementById("selectorATLARGE1").value;
+    leagueData[id].push(atlarge1Team);
+    let atlarge2Team = document.getElementById("selectorATLARGE2").value;
+    leagueData[id].push(atlarge2Team);
+    let atlarge3Team = document.getElementById("selectorATLARGE3").value;
+    leagueData[id].push(atlarge3Team);
+}
+
+function createLeague() {
+    league = new League(leagueData);
+}
+
 let scoreAbleGames = {};
 let teamLibrary = {};
 let scoredGameLibrary = {};
@@ -147,13 +170,19 @@ var data = new gameDictionary();
 data.fetchGameData();
 data.fetchConferenceData();
 let league;
+leagueData["participant1"] = [];
+leagueData["participant2"] = [];
+
+document.getElementById("generateTeam1").onclick = function(){createLeagueParticipant("participant1");};
+document.getElementById("generateTeam2").onclick = function(){createLeagueParticipant("participant2");};
+document.getElementById("createLeague").onclick = createLeague();
 
 window.setTimeout(()=> {
     dataCreator();
     updateAllScores();
-    leagueData["participant1"] = [];
-    leagueData["participant2"] = [];
-},2000);
+    // leagueData["participant1"] = [];
+    // leagueData["participant2"] = [];
+},500);
 
 // Debug Code
 window.setTimeout(()=> {
