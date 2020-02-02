@@ -139,12 +139,29 @@ function createAllTeams() {
     }
     function addTeamToTeamLibrary() {
         teamLibrary[teamName] = new teamScore(teamName);
-        updateHTML();
     }
 }
 
 function updateHTML() {
-    
+    for(let participantID = 0; participantID < teamsGenerated; participantID++) { 
+        let participantString = "participant" + (participantID + 1);
+        document.getElementById(participantString).innerHTML = participantString;
+        document.getElementById("teampoints" + (participantID + 1)).innerHTML = "Points"
+        document.getElementById("part" + (participantID + 1) + "Total").innerHTML = "Team Total:";
+        let participantTotal = 0;
+        for(let teamCursor = 0; teamCursor < 8;teamCursor++) {
+            let end = teamCursor+1;
+            let start = participantID + 1;
+            let teamPosition = "T" + start + end;
+            let teamScorePosition = "T" + start + end + "S";
+            let teamName = league.getTeamAtPosition(participantString ,teamCursor);
+            let teamScore = teamLibrary[teamName].getScore();
+            participantTotal = participantTotal + teamScore;
+            document.getElementById(teamPosition).innerHTML = teamName;
+            document.getElementById(teamScorePosition).innerHTML = teamScore;
+        }
+        document.getElementById("part" + (participantID + 1) + "TotalPoints").innerHTML = participantTotal;
+    }
 }
 
 function createLeagueParticipant(id) {
@@ -165,6 +182,7 @@ function createLeagueParticipant(id) {
 
 function createLeague() {
     league = new League(leagueData);
+    updateHTML();
 }
 
 let scoreAbleGames = {};

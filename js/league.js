@@ -12,4 +12,7 @@ export default class League {
         return this.leagueDictionary[participantKey];
     }
 
+    getTeamAtPosition(participantKey,position) {
+        return this.leagueDictionary[participantKey][position];
+    }
 }
