@@ -112,7 +112,7 @@ function createAllTeams() {
             populateSelector(currentSelector);
         }
         else {
-            atLargeSelector();
+            populateAtLargeSelector();
         }
     }
 
@@ -123,7 +123,7 @@ function createAllTeams() {
         currentSelector.add(opt);
     }
 
-    function atLargeSelector() {
+    function populateAtLargeSelector() {
         let opt1 = document.createElement("option");
         let opt2 = document.createElement("option");
         let opt3 = document.createElement("option");
@@ -145,24 +145,42 @@ function createAllTeams() {
 function updateHTML() {
     for(let participantID = 0; participantID < teamsGenerated; participantID++) { 
         let participantString = "participant" + (participantID + 1);
-        document.getElementById(participantString).innerHTML = participantString;
-        document.getElementById("teampoints" + (participantID + 1)).innerHTML = "Points"
-        document.getElementById("part" + (participantID + 1) + "Total").innerHTML = "Team Total:";
+        updateParticipantInfo(participantString, participantID);
+        updateTotalHtml(participantID);
         let participantTotal = 0;
         for(let teamCursor = 0; teamCursor < 8;teamCursor++) {
-            let end = teamCursor+1;
-            let start = participantID + 1;
-            let teamPosition = "T" + start + end;
-            let teamScorePosition = "T" + start + end + "S";
+            let { teamPosition, teamScorePosition } = generateGridLocationStrings(teamCursor, participantID);
             let teamName = league.getTeamAtPosition(participantString ,teamCursor);
             let teamScore = teamLibrary[teamName].getScore();
-            participantTotal = participantTotal + teamScore;
             document.getElementById(teamPosition).innerHTML = teamName;
             document.getElementById(teamScorePosition).innerHTML = teamScore;
+            participantTotal = participantTotal + teamScore;
         }
+        updateTotalTeamPoints(participantID, participantTotal);
+    }
+
+    function updateParticipantInfo(participantString, participantID) {
+        document.getElementById(participantString).innerHTML = participantString.toUpperCase();
+        document.getElementById("teampoints" + (participantID + 1)).innerHTML = "Points";
+    }
+
+    function updateTotalHtml(participantID) {
+        document.getElementById("part" + (participantID + 1) + "Total").innerHTML = "Team Total:";
+    }
+
+    function generateGridLocationStrings(teamCursor, participantID) {
+        let end = teamCursor + 1;
+        let start = participantID + 1;
+        let teamPosition = "T" + start + end;
+        let teamScorePosition = "T" + start + end + "S";
+        return { teamPosition, teamScorePosition };
+    }
+
+    function updateTotalTeamPoints(participantID, participantTotal) {
         document.getElementById("part" + (participantID + 1) + "TotalPoints").innerHTML = participantTotal;
     }
 }
+
 
 function createLeagueParticipant(id) {
     teamsGenerated = teamsGenerated + 1;
@@ -185,17 +203,18 @@ function createLeague() {
     updateHTML();
 }
 
-let scoreAbleGames = {};
-let teamLibrary = {};
-let scoredGameLibrary = {};
-let leagueData = {};
+var scoreAbleGames = {};
+var teamLibrary = {};
+var scoredGameLibrary = {};
+var leagueData = {};
 leagueData["participant1"] = [];
 leagueData["participant2"] = [];
 var data = new gameDictionary();
 data.fetchGameData();
 data.fetchConferenceData();
-let league;
-let selectors = {"Big Ten" : document.getElementById("selectorBIG10"),
+var league;
+var teamsGenerated = 0;
+var selectors = {"Big Ten" : document.getElementById("selectorBIG10"),
                 "Big 12" : document.getElementById("selectorBIG12"),
                 "Atlantic Coast" : document.getElementById("selectorACC"),
                 "Pac-12" : document.getElementById("selectorPAC12"),
@@ -203,7 +222,6 @@ let selectors = {"Big Ten" : document.getElementById("selectorBIG10"),
                 "atlarge1" : document.getElementById("selectorATLARGE1"),
                 "atlarge2" : document.getElementById("selectorATLARGE2"),
                 "atlarge3" : document.getElementById("selectorATLARGE3")};
-let teamsGenerated = 0;
 
 document.getElementById("generateTeam1").onclick = function(){createLeagueParticipant("participant1");};
 document.getElementById("generateTeam2").onclick = function(){createLeagueParticipant("participant2");};
@@ -212,7 +230,7 @@ document.getElementById("createLeague").onclick = function(){createLeague();};
 window.setTimeout(()=> {
     dataCreator();
     updateAllScores();
-},500);
+},50);
 
 // Debug Code
 window.setTimeout(()=> {
@@ -220,4 +238,4 @@ window.setTimeout(()=> {
     console.log(scoredGameLibrary);
     console.log(league);
     console.log(data.conferenceData);
-},10000);
+},5000);

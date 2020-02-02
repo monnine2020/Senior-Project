@@ -5,7 +5,7 @@ describe('Basic fetchAPI class functionality', () => {
     var testGameDictionary = new gameDictionary();
     beforeEach(function(done) {
         this.timeout(3000);
-        setTimeout(done, 200);
+        setTimeout(done, 50);
       });
     it('Class successfully creates gameData dictionary', () => {
         expect(testGameDictionary.gameData).to.not.equal(null);
@@ -23,6 +23,7 @@ describe('Basic fetchAPI class functionality', () => {
         expect(testGameDictionary.gameData[0]['HomeTeamName']).to.equal('Florida Gators');
         expect(testGameDictionary.gameData[0]['AwayTeamName']).to.equal('Miami Hurricanes');
     });
+    
     it('conferenceData is correctly updated with pulled information', () => {
         expect(testGameDictionary.conferenceData[0]['Teams'][0]['School']).to.equal("Temple");
         expect(testGameDictionary.conferenceData[0]['Teams'][0]['Conference']).to.equal("American Athletic - East");
