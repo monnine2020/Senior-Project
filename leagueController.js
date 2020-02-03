@@ -226,6 +226,7 @@ var selectors = {"Big Ten" : document.getElementById("selectorBIG10"),
 document.getElementById("generateTeam1").onclick = function(){createLeagueParticipant("participant1");};
 document.getElementById("generateTeam2").onclick = function(){createLeagueParticipant("participant2");};
 document.getElementById("createLeague").onclick = function(){createLeague();};
+document.getElementById("reloadPage").onclick = function(){document.location.reload();}
 
 window.setTimeout(()=> {
     dataCreator();
