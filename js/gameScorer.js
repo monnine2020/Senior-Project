@@ -1,3 +1,7 @@
+//  This class takes a game and data from a college football conference.
+//  It then decides which team won the game and how many points the were awarded.
+//  It returns a object that contains the winning team and the points they earned.
+//  By Ethan Monnin
 export default class gameScorer {
     constructor(game,confData) {
         this.homeTeam = game['HomeTeamName'];

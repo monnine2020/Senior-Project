@@ -1,3 +1,6 @@
+//  This class fetches data and stores it in a useable dictionary
+//
+//  By Ethan Monnin
 export default class gameDictionary {
 	constructor(){
         this.gameData;

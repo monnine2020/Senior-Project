@@ -1,3 +1,5 @@
+//  This class is used to store and update the total amount of points an individual football team has.
+//  By Ethan Monnin
 export default class teamScore {
     constructor(teamName) {
         this.totalScore= 0;

@@ -1,3 +1,5 @@
+//  This class makes a League object that stores participants and their teams that they chose.
+//  By Ethan Monnin
 export default class League {
     constructor(leagueDictionary) {
         this.participants = Object.keys(leagueDictionary);
