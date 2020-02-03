@@ -1,0 +1,10 @@
+This file describes the module interaction.
+
+The FetchAPI class works to collect the data needed for all the other modules. 
+It has two functions that will pull conference and team data.
+The gameScorer class takes in a single game from the FetchAPI dictionary.
+The gameScorer class then scores the game and the data can be sent on to the teamScore class to be be accumulated.
+The teamScore class is used to store the total score of a team from multiple scored games.
+The teamScore class has 3 funcions that get the name of the team, their score and update their score.
+The league class takes participants and a dictionary of teams that are attached to them respectively.
+The league class has 3 functions that get all the participants, gets the teams of a single participant and get a single team at a certain index for a participant.

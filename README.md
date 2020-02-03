@@ -6,7 +6,7 @@ Guide on installing.
 1. Download the respository.
 2. Put folder in place where it can be accessed on computer.
 3. Use a command prompt to get into the folder.
-4. Run a http-server from the folder in the command prompt(May need installed)
+4. Run a http-server from the folder in the command prompt(May need installed using "npm install http-server -g" in command prompt, *may vary on operating software)
 5. Navigate to the local ip address given in command prompt once server is running.
 6. Click on the leaguePage.html file to use!
 -------------------------
